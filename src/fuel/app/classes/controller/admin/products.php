@@ -2,7 +2,6 @@
 
 use Exception\ValidationException;
 use Fuel\Core\Input;
-use Fuel\Core\Log;
 
 class Controller_Admin_Products extends Controller_Admin_Base_Auth
 {
@@ -10,6 +9,12 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 
 	public function action_index()
 	{
+		Jobs_SendMail::dispatch([
+			'email' => 'abc@example.com',
+			'subject' => 'Test',
+			'body' => 'Hello world!',
+		], 'test');
+
 		$total = Model_Product::query()->count();
 		$products = Model_Product::query()
 			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
