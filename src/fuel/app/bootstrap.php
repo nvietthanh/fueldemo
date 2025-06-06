@@ -36,13 +36,33 @@ Fuel::$env = Arr::get($_SERVER, 'FUEL_ENV', Arr::get($_ENV, 'FUEL_ENV', getenv('
 \Fuel::init('config.php');
 
 set_exception_handler(function ($e) {
-	if ($e instanceof \Exception\ValidationException || $e instanceof \Exception\NotFoundException) {
-		$response = $e->toJson();
+	$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+	$isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
 
-		http_response_code($e->getStatus());
-
+	if ($isAjax || $isJson) {
 		header('Content-Type: application/json');
+
+		if ($e instanceof \Exception\ValidationException || $e instanceof \Exception\NotFoundException) {
+			$response = $e->toJson();
+			$status = $e->getStatus();
+		} else {
+			$status = 500;
+			$response = [
+				'error' => get_class($e),
+				'message' => $e->getMessage(),
+				'file' => $e->getFile(),
+				'line' => $e->getLine(),
+				'trace' => explode("\n", $e->getTraceAsString())
+			];
+		}
+
+		http_response_code($status);
 		echo json_encode($response);
+	} else {
+		echo "<h1>500 Internal Server Error</h1>";
+		echo "<pre>";
+		echo $e;
+		echo "</pre>";
 	}
 
 	exit;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
@@ -21,5 +22,12 @@
  */
 
 return array(
-
+    'redis' => array(
+        'default' => array(
+            'hostname' => 'redis',
+            'port'     => 6379,
+            'timeout'  => null,
+            'database' => 0,
+        ),
+    ),
 );
