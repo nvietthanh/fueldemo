@@ -5,7 +5,16 @@ use Exception\ValidationException;
 
 class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 {
+	protected $categoryService;
+
 	public $template = 'layouts/admin';
+
+	public function before()
+	{
+		parent::before();
+
+		$this->categoryService = Services_Admin_Category::forge();
+	}
 
 	public function action_index()
 	{
@@ -17,7 +26,7 @@ class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 			->get();
 
 		$data['categories'] = $categories;
-		$data['pagination'] = Helpers_Pagination::paginate($total, 'admin/categories');
+		$data['pagination'] = Helpers_Pagination::paginate($total);
 
 		$this->template->active_menu = 'categories';
 		$this->template->title = 'Manage Category';
@@ -32,21 +41,9 @@ class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 	{
 		$input = Input::post();
 
-		$val = Validation::forge();
+		$inputVal = Requests_Admin_Category_Store::validate($input);
 
-		$val->add('name', 'name')->add_rule('required');
-
-		if (!$val->run($input)) {
-			$errors = Helpers_Validation::getErrors($val);
-
-			throw new ValidationException($errors);
-		}
-
-		$product = Model_Category::forge([
-			'name' => $val->validated('name'),
-		]);
-
-		$product->save();
+		$this->categoryService->createCategory($inputVal);
 
 		return $this->jsonResponse(null, 'Created successfully!', 200);
 	}
@@ -64,28 +61,13 @@ class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 
 	public function action_update(string $id)
 	{
-		$category = Model_Category::find($id);
-
-		if (!$category) {
-			return $this->jsonResponse(null, 'Product not found', 404);
-		}
+		$category = Model_Category::findOrfail($id);
 
 		$input = Input::post();
 
-		$val = Validation::forge();
+		$inputVal = Requests_Admin_Category_Store::validate($input);
 
-		$val->add('name', 'name')->add_rule('required');
-
-		if (!$val->run($input)) {
-			$errors = Helpers_Validation::getErrors($val);
-
-			throw new ValidationException($errors);
-		}
-
-		$category->set([
-			'name' => $val->validated('name')
-		]);
-		$category->save();
+		$this->categoryService->updateCategory($category, $inputVal);
 
 		return $this->jsonResponse(null, 'Updated successfully!', 200);
 	}

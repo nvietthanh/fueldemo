@@ -34,8 +34,6 @@ $admin = array(
 	),
 	'admin/products/(:num)' => array(
 		array('POST', new Route('admin/products/update/$1')),
-	),
-	'admin/products/(:num)' =>array(
 		array('DELETE', new Route('admin/products/delete/$1')),
 	),
 

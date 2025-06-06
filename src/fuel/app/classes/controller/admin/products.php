@@ -1,20 +1,22 @@
 <?php
 
-use Exception\ValidationException;
 use Fuel\Core\Input;
 
 class Controller_Admin_Products extends Controller_Admin_Base_Auth
 {
+	protected $productService;
+
 	public $template = 'layouts/admin';
+
+	public function before()
+	{
+		parent::before();
+
+		$this->productService = Services_Admin_Product::forge();
+	}
 
 	public function action_index()
 	{
-		Jobs_SendMail::dispatch([
-			'email' => 'abc@example.com',
-			'subject' => 'Test',
-			'body' => 'Hello world!',
-		], 'test');
-
 		$total = Model_Product::query()->count();
 		$products = Model_Product::query()
 			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
@@ -24,7 +26,7 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 			->get();
 
 		$data['products'] = $products;
-		$data['pagination'] = Helpers_Pagination::paginate($total, 'admin/products');
+		$data['pagination'] = Helpers_Pagination::paginate($total);
 
 		$this->template->active_menu = 'products';
 		$this->template->title = 'Manage product';
@@ -53,51 +55,16 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 			$input['image_file'] = $_FILES['image_file'];
 		}
 
-		$val = Validation::forge();
+		$inputVal = Requests_Admin_Product_Store::validate($input);
 
-		$val->add('name', 'name')->add_rule('required');
-		$val->add('price', 'price')->add_rule('required');
-		$val->add('quantity', 'quantity')->add_rule('required');
-		$val->add('category_id', 'category id')->add_rule('required');
-		$val->add('description', 'description')->add_rule('required');
-		$val->add('image_file', 'Image')
-			->add_rule('required');
+		$this->productService->createProduct($inputVal);
 
-		if (!$val->run($input)) {
-			$errors = Helpers_Validation::getErrors($val);
-
-			throw new ValidationException($errors);
-		}
-
-		$upload_data = Helpers_Upload::process_file();
-
-		if ($upload_data['success']) {
-			$store_data = [
-				'name'        => $val->validated('name'),
-				'price'       => $val->validated('price'),
-				'quantity'    => $val->validated('quantity'),
-				'category_id' => $val->validated('category_id'),
-				'description' => $val->validated('description'),
-				'image_path'       => $upload_data['paths']['image_file'],
-			];
-
-			$product = Model_Product::forge($store_data);
-
-			$product->save();
-
-			return $this->jsonResponse(null, 'Created successfully!', 200);
-		} else {
-			return $this->jsonResponse($upload_data['errors'], 'Validation failed', 422);
-		}
+		return $this->jsonResponse(null, 'Created successfully!', 200);
 	}
 
 	public function action_edit(string $id)
 	{
-		$product = Model_Product::find($id);
-
-		if (!$product) {
-			throw new HttpNotFoundException();
-		}
+		$product = Model_Product::findOrFail($id);
 
 		$data['product'] = $product;
 		$data['categories'] = Model_Category::find('all');
@@ -113,11 +80,7 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 
 	public function action_update(string $id)
 	{
-		$product = Model_Product::find($id);
-
-		if (!$product) {
-			return $this->jsonResponse(null, 'Not found', 404);
-		}
+		$product = Model_Product::findOrFail($id);
 
 		$input = Input::post();
 
@@ -125,59 +88,19 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 			$input['image_file'] = $_FILES['image_file'];
 		}
 
-		$val = Validation::forge();
+		$inputVal = Requests_Admin_Product_Update::validate($input);
 
-		$val->add('name', 'name')->add_rule('required');
-		$val->add('price', 'price')->add_rule('required');
-		$val->add('quantity', 'quantity')->add_rule('required');
-		$val->add('category_id', 'category id')->add_rule('required');
-		$val->add('description', 'description')->add_rule('required');
-		$val->add('image_file', 'image');
-
-		if (!$val->run($input)) {
-			$errors = Helpers_Validation::getErrors($val);
-
-			throw new ValidationException($errors);
-		}
-
-		$update_data = [
-			'name'        => $val->validated('name'),
-			'price'       => $val->validated('price'),
-			'quantity'    => $val->validated('quantity'),
-			'category_id' => $val->validated('category_id'),
-			'description' => $val->validated('description'),
-		];
-
-		if (!empty($_FILES['image_file'])) {
-			$upload_data = Helpers_Upload::process_file();
-
-			if ($upload_data['success']) {
-				$update_data['image_path'] = $upload_data['paths']['image_file'] ?? $product->image_path;
-			} else {
-				return $this->jsonResponse($upload_data['errors'], 'Validation failed', 422);
-			}
-		}
-
-		$product->set($update_data);
-		$product->save();
+		$this->productService->updateProduct($product, $inputVal);
 
 		return $this->jsonResponse(null, 'Updated successfully!', 200);
 	}
 
 	public function action_delete(string $id)
 	{
-		$product = Model_Product::find($id);
+		$product = Model_Product::findOrfail($id);
 
-		if (!$product) {
-			return $this->jsonResponse(null, 'Not found', 404);
-		}
+		$product->delete();
 
-		try {
-			$product->delete();
-
-			return $this->jsonResponse(null, 'Deleted successfully');
-		} catch (\Exception $e) {
-			return $this->jsonResponse(null, 'Failed to delete product', 500);
-		}
+		return $this->jsonResponse(null, 'Deleted successfully');
 	}
 }

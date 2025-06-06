@@ -1,6 +1,6 @@
 <?php
 
-class Model_Product extends \Orm\Model_Soft
+class Model_Product extends Model_Base
 {
 	protected static $_properties = array(
 		"id" => array(
