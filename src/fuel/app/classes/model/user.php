@@ -1,6 +1,6 @@
 <?php
 
-class Model_User extends \Orm\Model
+class Model_User extends Model_Base
 {
 	protected static $_properties = array(
 		"id" => array(

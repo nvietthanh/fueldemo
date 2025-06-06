@@ -2,10 +2,10 @@
 
 class Helpers_Pagination
 {
-    public static function paginate(int $total, string $base_url, int $per_page = 10, string $uri_segment = 'page')
+    public static function paginate(int $total, int $per_page = 10, string $uri_segment = 'page')
     {
         Pagination::set_config([
-            'pagination_url' => Uri::create($base_url),
+            'pagination_url' => Uri::current(),
             'total_items'    => $total,
             'per_page'       => $per_page,
             'uri_segment'    => $uri_segment,

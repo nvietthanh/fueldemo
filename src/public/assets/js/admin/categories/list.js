@@ -4,7 +4,7 @@ $('#create-category-form').on('submit', function (event) {
     
     const formData = new FormData($(this)[0])
     
-    handleCallAjax('/admin/categories/store', formData, 'create-category-form')
+    handleCallAjax('/admin/categories', formData, 'create-category-form')
 })
 
 $('#edit-category-form').on('submit', function (event) {
