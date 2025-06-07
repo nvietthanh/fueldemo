@@ -2,6 +2,7 @@
 
 namespace Fuel\Tasks;
 
+use Seeds_Admins;
 use Seeds_Products;
 use Seeds_Categories;
 use Seeds_Users;
@@ -20,6 +21,7 @@ class Seed
 	 */
 	public function run()
 	{
+        Seeds_Admins::run();
         Seeds_Users::run();
         Seeds_Categories::run();
         Seeds_Products::run();

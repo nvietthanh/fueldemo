@@ -4,15 +4,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
-	<link rel="stylesheet" href="/assets/css/base.css">
-	<link rel="stylesheet" href="/assets/css/admin/form.css">
-	<?php echo Asset::css('bootstrap.css'); ?>
+	<title>Admin login</title>
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/admin/style.css">
+    <link rel="stylesheet" href="/assets/css/admin/form.css">
+    <link rel="stylesheet" href="/assets/css/admin/pagination.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body>
 	<div class="container d-flex justify-content-center align-items-center vh-100">
-		<div class="card p-4 shadow" style="max-width: 400px; margin: 0 auto;">
+		<div class="card p-4 shadow" style="max-width: 600px; width: 400px; margin: 0 auto;">
 			<h2 class="text-center mb-4">Login</h2>
 
 			<?php $errors = Session::get_flash('errors'); ?>
@@ -22,10 +25,10 @@
 					<label for="email" class="form-label">Email</label>
 					<input type="text" name="email" id="email" value="<?= e(Input::post('email', '')) ?>" class="form-control">
 					<?php if (!empty($errors['email'])): ?>
-						<p class="error-message"><?= e($errors['email']->get_message()) ?></p>
+						<span class="error-message"><?= e($errors['email']->get_message()) ?></span>
 					<?php endif; ?>
 					<?php if (Session::get_flash('msg_error')): ?>
-						<p class="error-message"><?= Session::get_flash('msg_error') ?></p>
+						<span class="error-message"><?= Session::get_flash('msg_error') ?></span>
 					<?php endif; ?>
 				</div>
 
@@ -33,7 +36,7 @@
 					<label for="password" class="form-label">Password</label>
 					<input type="password" name="password" id="password" value="<?= e(Input::post('password', '')) ?>" class="form-control">
 					<?php if (!empty($errors['password'])): ?>
-						<p class="error-message"><?= e($errors['password']->get_message()) ?></p>
+						<span class="error-message"><?= e($errors['password']->get_message()) ?></span>
 					<?php endif; ?>
 				</div>
 

@@ -2,7 +2,6 @@
 
 namespace Traits;
 
-use Fuel\Core\Config;
 use Fuel\Core\Redis_Db;
 use Queue_Status;
 use Ramsey\Uuid\Uuid;

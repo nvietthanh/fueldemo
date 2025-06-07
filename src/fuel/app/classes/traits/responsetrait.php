@@ -41,7 +41,7 @@ trait ResponseTrait
         ];
 
         $xml = new SimpleXMLElement('<response/>');
-        $this->arrayToXml($responseData, $xml);
+        self::arrayToXml($responseData, $xml);
 
         return Response::forge(
             $xml->asXML(),

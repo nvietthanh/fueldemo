@@ -1,6 +1,8 @@
 <?php
 
-class Helpers_Upload
+namespace Helpers;
+
+class UploadHelper
 {
     /**
      * Handles file upload from a specific input field.

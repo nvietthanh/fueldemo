@@ -2,6 +2,7 @@
 
 use Exception\ValidationException;
 use Fuel\Core\Validation;
+use Helpers\ValidationHelper;
 
 abstract class Requests_Common_Base
 {
@@ -23,7 +24,7 @@ abstract class Requests_Common_Base
         $val = static::setValidator($val);
 
         if (!$val->run($input)) {
-            $errors = Helpers_Validation::getErrors($val);
+            $errors = ValidationHelper::getErrors($val);
 
             throw new ValidationException($errors);
         }

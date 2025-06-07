@@ -1,6 +1,11 @@
 <?php
 
-class Helpers_Pagination
+namespace Helpers;
+
+use Fuel\Core\Pagination;
+use Fuel\Core\Uri;
+
+class PaginationHelper
 {
     public static function paginate(int $total, int $per_page = 10, string $uri_segment = 'page')
     {
@@ -20,7 +25,7 @@ class Helpers_Pagination
             'from' => $total > 0 ? $from : 0,
             'to' => $total > 0 ? $to : 0,
             'total' => $total,
-            'links' => \Pagination::create_links(),
+            'links' => Pagination::create_links(),
         ];
     }
 }
