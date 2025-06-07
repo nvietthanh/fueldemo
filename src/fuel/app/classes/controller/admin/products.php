@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Input;
+use Helpers\PaginationHelper;
 
 class Controller_Admin_Products extends Controller_Admin_Base_Auth
 {
@@ -26,7 +27,7 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 			->get();
 
 		$data['products'] = $products;
-		$data['pagination'] = Helpers_Pagination::paginate($total);
+		$data['pagination'] = PaginationHelper::paginate($total);
 
 		$this->template->active_menu = 'products';
 		$this->template->title = 'Manage product';

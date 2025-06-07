@@ -2,7 +2,9 @@
 
 namespace Exception;
 
-abstract class BaseException extends \FuelException
+use Fuel\Core\FuelException;
+
+abstract class BaseException extends FuelException
 {
     protected $status = 500;
     protected $data = [];

@@ -1,6 +1,7 @@
 <?php
 
 use Exception\ValidationException;
+use Helpers\UploadHelper;
 
 class Services_Admin_Product
 {
@@ -17,7 +18,7 @@ class Services_Admin_Product
 
     public function createProduct(array $data): Model_Product
     {
-        $upload_data = Helpers_Upload::process_file();
+        $upload_data = UploadHelperr::process_file();
 
         if (!$upload_data['success']) {
             throw new ValidationException($upload_data['errors']);
@@ -50,7 +51,7 @@ class Services_Admin_Product
         ];
 
         if (!empty($_FILES['image_file'])) {
-            $upload_data = Helpers_Upload::process_file();
+            $upload_data = UploadHelper::process_file();
 
             if ($upload_data['success']) {
                 $update_data['image_path'] = $upload_data['paths']['image_file'] ?? $product->image_path;

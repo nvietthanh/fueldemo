@@ -40,8 +40,6 @@ set_exception_handler(function ($e) {
 	$isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
 
 	if ($isAjax || $isJson) {
-		header('Content-Type: application/json');
-
 		if ($e instanceof \Exception\ValidationException || $e instanceof \Exception\NotFoundException) {
 			$response = $e->toJson();
 			$status = $e->getStatus();
@@ -56,14 +54,12 @@ set_exception_handler(function ($e) {
 			];
 		}
 
+		header('Content-Type: application/json');
 		http_response_code($status);
 		echo json_encode($response);
-	} else {
-		echo "<h1>500 Internal Server Error</h1>";
-		echo "<pre>";
-		echo $e;
-		echo "</pre>";
+
+		exit;
 	}
 
-	exit;
+	return \Errorhandler::exception_handler($e);
 });

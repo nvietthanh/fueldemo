@@ -1,7 +1,6 @@
 <?php
 
-use Exception\NotFoundException;
-use Exception\ValidationException;
+use Helpers\PaginationHelper;
 
 class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 {
@@ -26,7 +25,7 @@ class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 			->get();
 
 		$data['categories'] = $categories;
-		$data['pagination'] = Helpers_Pagination::paginate($total);
+		$data['pagination'] = PaginationHelper::paginate($total);
 
 		$this->template->active_menu = 'categories';
 		$this->template->title = 'Manage Category';

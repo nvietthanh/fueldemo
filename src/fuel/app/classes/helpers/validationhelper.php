@@ -1,8 +1,10 @@
 <?php
 
+namespace Helpers;
+
 use Fuel\Core\Validation;
 
-class Helpers_Validation
+class ValidationHelper
 {
     /**
      * Collect multiple validation errors per field from a Validation instance.
