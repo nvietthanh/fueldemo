@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Admin_Auth extends Controller_Admin_Common_Auth
+class Controller_User_Auth extends Controller_User_Common_Auth
 {
 	public function action_login()
 	{
@@ -9,7 +9,7 @@ class Controller_Admin_Auth extends Controller_Admin_Common_Auth
 
 			$val->add('email', 'email')->add_rule('required');
 			$val->add('password', 'password')->add_rule('required');
-	
+
 			if ($val->run()) {
 				$email = Input::post('email');
 				$password = Input::post('password');
@@ -26,7 +26,7 @@ class Controller_Admin_Auth extends Controller_Admin_Common_Auth
 			}
 		}
 
-		return Response::forge(View::forge('admin/auth/login'));
+		return Response::forge(View::forge('user/auth/login'));
 	}
 
 	public function action_logout()

@@ -49,4 +49,35 @@ $admin = array(
 	),
 );
 
-return array_merge($common, $admin);
+$user = array(
+	// authenticate
+	'login' => 'user/auth/login',
+	'logout' => 'user/auth/logout',
+
+	'products' => array(
+		array('GET', new Route('user/products/index')),
+	),
+	'products/(:num)' => array(
+		array('GET', new Route('user/products/show/$1')),
+	),
+
+	'cart' => array(
+		array('GET', new Route('user/cart/index')),
+	),
+	'cart/add' => array(
+		array('POST', new Route('user/cart/store')),
+	),
+	'cart/remove' => array(
+		array('DELETE', new Route('user/cart/delete')),
+	),
+	'cart/update' => array(
+		array('POST', new Route('user/cart/update')),
+	),
+
+	'checkout' => array(
+		array('GET', new Route('user/checkout/index')),
+		array('POST', new Route('user/checkout/store')),
+	),
+);
+
+return array_merge($common, $admin, $user);

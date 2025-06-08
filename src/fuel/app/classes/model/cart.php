@@ -1,35 +1,23 @@
 <?php
 
-class Model_Admin extends \Orm\Model
+class Model_Cart extends \Orm\Model
 {
 	protected static $_properties = array(
 		"id" => array(
 			"label" => "Id",
 			"data_type" => "int",
 		),
-		"username" => array(
-			"label" => "Username",
-			"data_type" => "varchar",
-		),
-		"password" => array(
-			"label" => "Password",
-			"data_type" => "varchar",
-		),
-		"email" => array(
-			"label" => "Email",
-			"data_type" => "varchar",
-		),
-		"group" => array(
-			"label" => "Group",
+		"user_id" => array(
+			"label" => "Category id",
 			"data_type" => "int",
 		),
-		"last_login" => array(
-			"label" => "Last login",
+		"product_id" => array(
+			"label" => "Category id",
 			"data_type" => "int",
 		),
-		"login_hash" => array(
-			"label" => "Login hash",
-			"data_type" => "varchar",
+		"quantity" => array(
+			"label" => "Category id",
+			"data_type" => "int",
 		),
 		"created_at" => array(
 			"label" => "Created at",
@@ -54,7 +42,7 @@ class Model_Admin extends \Orm\Model
 		),
 	);
 
-	protected static $_table_name = 'admins';
+	protected static $_table_name = 'carts';
 
 	protected static $_primary_key = array('id');
 

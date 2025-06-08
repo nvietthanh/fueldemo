@@ -2,6 +2,9 @@
 
 namespace Helpers;
 
+use Fuel\Core\Config;
+use Fuel\Core\Upload;
+
 class UploadHelper
 {
     /**

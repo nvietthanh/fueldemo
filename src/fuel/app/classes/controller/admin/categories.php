@@ -2,7 +2,7 @@
 
 use Helpers\PaginationHelper;
 
-class Controller_Admin_Categories extends Controller_Admin_Base_Auth
+class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 {
 	protected $categoryService;
 
@@ -25,7 +25,7 @@ class Controller_Admin_Categories extends Controller_Admin_Base_Auth
 			->get();
 
 		$data['categories'] = $categories;
-		$data['pagination'] = PaginationHelper::paginate($total);
+		$data['pagination'] = PaginationHelper::paginate(10, $total);
 
 		$this->template->active_menu = 'categories';
 		$this->template->title = 'Manage Category';
