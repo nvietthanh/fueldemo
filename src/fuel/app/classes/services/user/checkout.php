@@ -81,6 +81,12 @@ class Services_User_Checkout
                 'price'      => $item->price,
             ]);
             $order_product->save();
+
+            $product = Model_Product::find($item->id);
+            if ($product) {
+                $product->quantity = max(0, $product->quantity - $item->quantity);
+                $product->save();
+            }
         }
 
         Jobs_User_Checkout::dispatch($order->id);

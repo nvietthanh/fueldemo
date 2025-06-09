@@ -42,10 +42,8 @@ class Controller_User_Checkout extends Controller_User_Common_Auth
 		DB::start_transaction();
 		try {
 			$this->checkoutService->createCheckout($inputVal);
-			echo($agag);
 
 			DB::commit_transaction();
-
 
 			return $this->jsonResponse(null, 'Created successfully!', 200);
 		} catch (\Throwable $th) {

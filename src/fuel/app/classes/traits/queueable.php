@@ -6,9 +6,9 @@ use Fuel\Core\Redis_Db;
 use Queue_Status;
 use Ramsey\Uuid\Uuid;
 
-trait Dispatchable
+trait Queueable
 {
-    public static function dispatch(...$args): void
+    public function start(...$args): void
     {
         $redis = Redis_Db::instance();
 
