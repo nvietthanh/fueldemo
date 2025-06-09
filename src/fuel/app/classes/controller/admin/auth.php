@@ -15,11 +15,12 @@ class Controller_Admin_Auth extends Controller_Admin_Common_Auth
 				$password = Input::post('password');
 
 				if (Auth::login($email, $password)) {
-					$previous_url = Input::post('previous_url', 'products');
+					$previous_url = Input::post('previous_url');
+					$previous_url = $previous_url == '' ? '/admin/products' : $previous_url;
 
 					Response::redirect($previous_url);
 				} else {
-					Session::set_flash('msg_error', 'Sai tên đăng nhập hoặc mật khẩu.');
+					Session::set_flash('msg_error', 'The username or password you entered is incorrect.');
 				}
 			} else {
 				Session::set_flash('errors', $val->error());

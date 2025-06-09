@@ -1,11 +1,16 @@
 <?php
 
 use Fuel\Core\Validation;
+use Rules\CategoryRules;
+use Rules\ImageRules;
 
 class Requests_Admin_Product_Update extends Requests_Common_Base
 {
-    public static function setValidator(Validation $val): Validation
-    {
+	public static function setValidator(Validation $val): Validation
+	{
+		$val->add_callable(CategoryRules::forge('category_rule'));
+		$val->add_callable(ImageRules::forge('image_rule'));
+
 		$val->add('name', 'name')
 			->add_rule('required')
 			->add_rule('max_length', 255);
@@ -29,5 +34,5 @@ class Requests_Admin_Product_Update extends Requests_Common_Base
 			->add_rule('valid_image_file_size');
 
 		return $val;
-    }
+	}
 }

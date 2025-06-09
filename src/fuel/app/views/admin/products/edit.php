@@ -11,7 +11,7 @@
 				<button class="btn btn-primary" onclick="handleUploadImage(event)">Choose image</button>
 			</div>
 			<div id="imagePreview" style="width: 300px; min-height: 200px; border: 1px solid #000;">
-				<img id="previewImg" src="<?= Uri::base(false) . $product->image_path ?>" alt="Preview" class="w-100" style="display: block;" />
+				<img id="previewImg" src="<?= get_file_url($product->image_path) ?>" alt="Preview" class="w-100" style="display: block;" />
 			</div>
 			<span id="error-image_file" class="error-message"></span>
 		</div>

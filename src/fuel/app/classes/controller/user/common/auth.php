@@ -17,7 +17,7 @@ class Controller_User_Common_Auth extends Controller_Base
 		}
 
 		if ($is_logged_in && $uri === 'login') {
-			Response::redirect('/product');
+			Response::redirect('/products');
 		}
 	}
 }

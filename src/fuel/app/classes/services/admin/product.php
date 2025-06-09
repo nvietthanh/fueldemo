@@ -1,6 +1,8 @@
 <?php
 
 use Exception\ValidationException;
+use Facades\Storage;
+use Helpers\FileHelper;
 use Helpers\UploadHelper;
 
 class Services_Admin_Product
@@ -18,11 +20,7 @@ class Services_Admin_Product
 
     public function createProduct(array $data): Model_Product
     {
-        $upload_data = UploadHelper::process_file();
-
-        if (!$upload_data['success']) {
-            throw new ValidationException($upload_data['errors']);
-        }
+        $image_path = FileHelper::upload($data['image_file'], 'products');
 
         $store_data = [
             'name'        => $data['name'] ?? null,
@@ -30,7 +28,7 @@ class Services_Admin_Product
             'quantity'    => $data['quantity'] ?? null,
             'category_id' => $data['category_id'] ?? null,
             'description' => $data['description'] ?? null,
-            'image_path'       => $upload_data['paths']['image_file'],
+            'image_path'  => $image_path,
         ];
 
         $product = Model_Product::forge($store_data);
@@ -50,14 +48,10 @@ class Services_Admin_Product
             'description' => $data['description'] ?? null,
         ];
 
-        if (!empty($_FILES['image_file'])) {
-            $upload_data = UploadHelper::process_file();
+        if (isset($data['image_file'])) {
+            $image_path = FileHelper::upload($data['image_file'], 'products');
 
-            if ($upload_data['success']) {
-                $update_data['image_path'] = $upload_data['paths']['image_file'] ?? $product->image_path;
-            } else {
-                throw new ValidationException($upload_data['errors']);
-            }
+            $update_data['image_path'] = $image_path;
         }
 
         $product->set($update_data);

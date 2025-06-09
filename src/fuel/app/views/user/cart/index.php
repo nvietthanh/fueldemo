@@ -11,7 +11,7 @@
             <div class="cart-item" data-id="<?= $item->product_id ?>">
                 <div class="cart-wrapper">
                     <div class="product-info">
-                        <img src="<?= $item->image_path ?>" alt="<?= htmlspecialchars($item->name) ?>">
+                        <img src="<?= get_file_url($item->image_path) ?>" alt="<?= htmlspecialchars($item->name) ?>">
                         <div>
                             <div class="product-name"><?= htmlspecialchars($item->name) ?></div>
                             <div class="product-price"><?= number_format($item->price) ?> VND</div>

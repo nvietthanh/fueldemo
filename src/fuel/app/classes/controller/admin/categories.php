@@ -18,14 +18,19 @@ class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 	public function action_index()
 	{
 		$total = Model_Category::query()->count();
+
+		$pagination = PaginationHelper::paginate($total, 10);
+
 		$categories = Model_Category::query()
 			->select('id', 'name', 'created_at', 'updated_at')
-			->rows_offset(Pagination::get('offset'))
-			->rows_limit(Pagination::get('per_page'))
+			->rows_offset($pagination['offset'])
+			->rows_limit($pagination['per_page'])
 			->get();
 
-		$data['categories'] = $categories;
-		$data['pagination'] = PaginationHelper::paginate(10, $total);
+		$data = [
+			'categories' => $categories,
+			'pagination' => $pagination,
+		];
 
 		$this->template->active_menu = 'categories';
 		$this->template->title = 'Manage Category';

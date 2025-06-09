@@ -19,17 +19,22 @@ class Controller_Admin_Products extends Controller_Admin_Common_Auth
 	public function action_index()
 	{
 		$total = Model_Product::query()->count();
+
+		$pagination = PaginationHelper::paginate($total, 10);
+
 		$products = Model_Product::query()
 			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
 			->related('category')
 			->order_by('updated_at', 'DESC')
 			->order_by('id', 'DESC')
-			->rows_offset(Pagination::get('offset'))
-			->rows_limit(Pagination::get('per_page'))
+			->rows_offset($pagination['offset'])
+			->rows_limit($pagination['per_page'])
 			->get();
-
-		$data['products'] = $products;
-		$data['pagination'] = PaginationHelper::paginate(10, $total);
+ 
+		$data = [
+			'products' => $products,
+			'pagination' => $pagination,
+		];
 
 		$this->template->active_menu = 'products';
 		$this->template->title = 'Manage product';
