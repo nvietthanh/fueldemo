@@ -2,11 +2,11 @@
 
 use Email\Email;
 use Fuel\Core\View;
-use Traits\Dispatchable;
+use Traits\Queueable;
 
-class Jobs_User_Checkout
+class Jobs_User_Checkout extends Jobs_Base
 {
-    use Dispatchable;
+    use Queueable;
 
     protected string $order_id;
 
@@ -15,7 +15,7 @@ class Jobs_User_Checkout
         $this->order_id = $order_id;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $order = Model_Order::query()
             ->related([
