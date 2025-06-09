@@ -78,6 +78,9 @@ $user = array(
 		array('GET', new Route('user/checkout/index')),
 		array('POST', new Route('user/checkout/store')),
 	),
+	'checkout/complete' => array(
+		array('GET', new Route('user/checkout/complete')),
+	),
 );
 
 return array_merge($common, $admin, $user);

@@ -49,12 +49,7 @@
                 <input type="text" name="phone_number" class="form-control" id="phone">
                 <span id="error-phone_number" class="error-message"></span>
             </div>
-            <div class="col-md-6 mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email">
-                <span id="error-email" class="error-message"></span>
-            </div>
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center mt-5">
                 <button type="submit" class="btn btn-success">Place Order</button>
             </div>
         </form>

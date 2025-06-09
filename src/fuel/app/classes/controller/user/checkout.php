@@ -1,5 +1,7 @@
 <?php
 
+use Fuel\Core\DB;
+
 class Controller_User_Checkout extends Controller_User_Common_Auth
 {
 	protected $checkoutService;
@@ -21,7 +23,10 @@ class Controller_User_Checkout extends Controller_User_Common_Auth
 
 		$this->template->title = 'Checkout';
 		$this->template->content = View::forge('user/checkout/index', $data, false);
-		$this->template->css = 'user/checkout.css';
+		$this->template->css = [
+			'admin/form.css',
+			'user/checkout.css',
+		];
 		$this->template->js = [
 			'admin/form/form.js',
 			'user/checkout.js',
@@ -34,8 +39,30 @@ class Controller_User_Checkout extends Controller_User_Common_Auth
 
 		$inputVal = Requests_User_Checkout_Store::validate($input);
 
-		$this->checkoutService->createCheckout($inputVal);
+		DB::start_transaction();
+		try {
+			$this->checkoutService->createCheckout($inputVal);
+			echo($agag);
 
-		return $this->jsonResponse(null, 'Created successfully!', 200);
+			DB::commit_transaction();
+
+
+			return $this->jsonResponse(null, 'Created successfully!', 200);
+		} catch (\Throwable $th) {
+			DB::rollback_transaction();
+
+			return $this->jsonResponse([], $th->getMessage(), 500);
+		}
+	}
+
+	public function action_complete()
+	{
+		$this->template->title = 'Order success';
+		$this->template->content = View::forge('user/checkout/complete');
+		$this->template->css = 'user/checkout.css';
+		$this->template->js = [
+			'admin/form/form.js',
+			'user/checkout.js',
+		];
 	}
 }

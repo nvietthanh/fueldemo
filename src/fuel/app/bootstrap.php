@@ -14,6 +14,8 @@
 // Bootstrap the framework - THIS LINE NEEDS TO BE FIRST!
 require COREPATH . 'bootstrap.php';
 
+require_once APPPATH . 'classes/helpers/helper.php';
+
 // Add framework overload classes here
 \Autoloader::add_classes(array(
 	// Example: 'View' => APPPATH.'classes/myview.php',
@@ -34,6 +36,28 @@ Fuel::$env = Arr::get($_SERVER, 'FUEL_ENV', Arr::get($_ENV, 'FUEL_ENV', getenv('
 
 // Initialize the framework with the config file.
 \Fuel::init('config.php');
+
+// Loading env
+$env_file = realpath(__DIR__ . '/../.env');
+if ($env_file && file_exists($env_file)) {
+    $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0 || trim($line) === '') {
+            continue;
+        }
+
+        if (strpos($line, '=') !== false) {
+            list($name, $value) = explode('=', $line, 2);
+            $name = trim($name);
+            $value = trim($value, " \t\n\r\0\x0B\"'");
+
+            putenv("$name=$value");
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
 
 set_exception_handler(function ($e) {
 	$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';

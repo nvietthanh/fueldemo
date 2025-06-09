@@ -21,6 +21,10 @@ function showProductDetail(productId) {
 
             $('#loading-spinner').hide();
             $('#product-details').show();
+
+            $('#product-details .btn-buy').off('click').on('click', function () {
+                addProductCart(product.id)
+            })
         },
         error: function(xhr) {
             const response = xhr.responseJSON
