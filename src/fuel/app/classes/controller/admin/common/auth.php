@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Admin_Base_Auth extends Controller_Base
+class Controller_Admin_Common_Auth extends Controller_Base
 {
 	public function before()
 	{
@@ -10,7 +10,10 @@ class Controller_Admin_Base_Auth extends Controller_Base
 		$is_logged_in = Auth::check();
 
 		if (!$is_logged_in && $uri !== 'admin/login') {
-			Response::redirect('admin/login');
+			$previous_url = Uri::current();
+			$login_url = 'admin/login?previous_url=' . urlencode($previous_url);
+
+			Response::redirect($login_url);
 		}
 
 		if ($is_logged_in && $uri === 'admin/login') {

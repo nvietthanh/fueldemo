@@ -6,10 +6,7 @@ return array(
     array(
       'default' => 
       array(
-        0 => '001_create_users',
-        1 => '002_create_categories',
-        2 => '003_create_products',
-        3 => '004_create_admins',
+        0 => '005_create_carts',
       ),
     ),
     'module' => 

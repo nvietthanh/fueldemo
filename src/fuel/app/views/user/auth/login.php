@@ -16,11 +16,11 @@
 <body>
 	<div class="container d-flex justify-content-center align-items-center vh-100">
 		<div class="card p-4 shadow" style="max-width: 600px; width: 400px; margin: 0 auto;">
-			<h2 class="text-center mb-4">Admin Login</h2>
+			<h2 class="text-center mb-4">Login</h2>
 
 			<?php $errors = Session::get_flash('errors'); ?>
 
-			<form action="/admin/login" method="post">
+			<form action="/login" method="post">
 				<input type="hidden" name="previous_url" value="<?= Input::get('previous_url') ?>">
 
 				<div class="mb-3">

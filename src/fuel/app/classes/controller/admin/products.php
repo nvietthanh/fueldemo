@@ -3,7 +3,7 @@
 use Fuel\Core\Input;
 use Helpers\PaginationHelper;
 
-class Controller_Admin_Products extends Controller_Admin_Base_Auth
+class Controller_Admin_Products extends Controller_Admin_Common_Auth
 {
 	protected $productService;
 
@@ -22,12 +22,14 @@ class Controller_Admin_Products extends Controller_Admin_Base_Auth
 		$products = Model_Product::query()
 			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
 			->related('category')
+			->order_by('updated_at', 'DESC')
+			->order_by('id', 'DESC')
 			->rows_offset(Pagination::get('offset'))
 			->rows_limit(Pagination::get('per_page'))
 			->get();
 
 		$data['products'] = $products;
-		$data['pagination'] = PaginationHelper::paginate($total);
+		$data['pagination'] = PaginationHelper::paginate(10, $total);
 
 		$this->template->active_menu = 'products';
 		$this->template->title = 'Manage product';
