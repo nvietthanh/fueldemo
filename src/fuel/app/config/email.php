@@ -47,7 +47,7 @@ return array(
         /**
          * Mail driver (mail, smtp, sendmail, noop)
          */
-        'driver' => 'smtp',
+        'driver' => env('MAIL_DRIVER', 'smtp'),
 
         /**
          * Whether to send as html, set to null for autodetection.
@@ -79,8 +79,8 @@ return array(
          * Default sender details
          */
         'from' => array(
-            'email' => false,
-            'name'  => false,
+            'email' => env('MAIL_FROM_ADDRESS', ''),
+            'name'  => env('MAIL_FROM_NAME', ''),
         ),
 
         /**
@@ -117,13 +117,13 @@ return array(
          * SMTP settings
          */
         'smtp' => array(
-            'host'     => 'mailpit',
-            'port'     => 1025,
-            'username' => '',
-            'password' => '',
-            'timeout'  => 5,
-            'starttls' => false,
-            'options'  => array(),
+            'host'     => env('MAIL_HOST', ''),
+            'port'     => (int) env('MAIL_PORT', 1025),
+            'username' => env('MAIL_USERNAME', ''),
+            'password' => env('MAIL_PASSWORD', ''),
+            'timeout'  => (int) env('MAIL_TIMEOUT', 5),
+            'starttls' => filter_var(env('MAIL_STARTTLS', false), FILTER_VALIDATE_BOOLEAN),
+            'options'  => [],
         ),
 
         /**

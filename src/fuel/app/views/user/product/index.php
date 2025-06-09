@@ -1,9 +1,9 @@
-<div id="listProduct" class="container mt-5">
+<div id="listProduct" class="container">
 	<h2 class="text-center mb-5">Product List</h2>
 
 	<div class="row">
 		<?php foreach ($products as $product): ?>
-			<div class="col-md-4 mb-4">
+			<div class="col-md-3 mb-4">
 				<div class="card shadow-sm border-light rounded">
 					<div class="card-img-top">
 						<img src="<?= Uri::base(false) . $product->image_path ?>" alt="<?php echo e($product->name); ?>">
@@ -58,10 +58,13 @@
 							<p class="product-category">Category Name</p>
 							<p class="product-description">No description available.</p>
 							<p class="product-price">0 VND</p>
-							<a href="" class="btn-buy btn btn-success mt-3">Buy Now</a>
+							<button class="btn-buy btn btn-success mt-3" onclick="addProductCart()">
+								Add to Cart
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>

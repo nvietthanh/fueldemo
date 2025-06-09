@@ -24,10 +24,11 @@
 return array(
     'redis' => array(
         'default' => array(
-            'hostname' => 'redis',
-            'port'     => 6379,
-            'timeout'  => null,
-            'database' => 0,
+            'hostname'     => env('REDIS_HOST', '127.0.0.1'),
+            'port'     => env('REDIS_PORT', '6379'),
+            'password' => env('REDIS_PASSWORD'),
+            'database' => (int) env('REDIS_DATABASE', 0),
+            'timeout'  => 2.5,
         ),
     ),
 );

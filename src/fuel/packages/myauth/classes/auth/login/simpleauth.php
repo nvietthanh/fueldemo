@@ -8,12 +8,14 @@ class Auth_Login_SimpleAuth extends \Auth\Auth_Login_Simpleauth
 
 	public function set_configname(?string $configname = null)
 	{
-		$this_controller = \Request::active()->controller;
+		$this_controller = \Request::active()->controller ?? null;
 
-		if (preg_match('/^Controller_Admin_/', $this_controller)) {
-			$this->configname = 'admins';
-		} else {
-			$this->configname = 'users';
+		if ($this_controller) {
+			if (preg_match('/^Controller_Admin_/', $this_controller)) {
+				$this->configname = 'admins';
+			} else {
+				$this->configname = 'users';
+			}
 		}
 	}
 

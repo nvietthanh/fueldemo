@@ -71,7 +71,6 @@
     </style>
 </head>
 <body>
-
     <div class="email-container">
         <div class="order-info">
             <h3>Dear <?php echo e($customer['fullname']); ?>,</h3>
@@ -87,18 +86,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $total = 0; ?>
                     <?php foreach ($products as $product): ?>
+                    <?php $sub_total = $product->quantity * $product->price; ?>
+                    <?php $total += $sub_total; ?>
                     <tr>
                         <td><?php echo e($product['name']); ?></td>
                         <td><?php echo e($product['quantity']); ?></td>
                         <td><?php echo e(number_format($product['price'], 0, ',', '.')); ?> VND</td>
-                        <td><?php echo e(number_format($product['total'], 0, ',', '.')); ?> VND</td>
+                        <td><?php echo e(number_format($sub_total, 0, ',', '.')); ?> VND</td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
 
-            <p class="total">Total: <?php echo e(number_format($total_price, 0, ',', '.')); ?> VND</p>
+            <p class="total">Total: <?php echo e(number_format($total, 0, ',', '.')); ?> VND</p>
 
             <p>We will notify you once your order has been shipped. In the meantime, feel free to track your order status in your account.</p>
 
@@ -110,6 +112,5 @@
             <p>Best regards, <br>Your Brand Team</p>
         </div>
     </div>
-
 </body>
 </html>

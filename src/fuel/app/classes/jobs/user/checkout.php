@@ -8,23 +8,41 @@ class Jobs_User_Checkout
 {
     use Dispatchable;
 
-    protected $data;
+    protected string $order_id;
 
-    public function __construct(array $data)
+    public function __construct(string $order_id)
     {
-        $this->data = $data;
+        $this->order_id = $order_id;
     }
 
     public function handle()
     {
-        $message = View::forge('mail/user/checkout/order-success', $this->data);
-        $customer = $this->data['customer'];
+        $order = Model_Order::query()
+            ->related([
+                'user' => [
+                    'select' => ['id', 'email'],
+                ],
+                'orderProducts' => [
+                    'select' => ['product_id', 'name', 'quantity', 'price'],
+                ]
+            ])
+            ->where('id', $this->order_id)
+            ->get_one();
 
-        $email = Email::forge();
-        $email->from('no-reply@yourdomain.com', 'Your Brand')
-            ->to($customer['email'], $customer['fullname'])
-            ->subject('Your Order Was Successful')
-            ->html_body($message)
-            ->send();
+        $customer = json_decode($order->customer, true);
+        $user = $order->user;
+
+        if ($user) {
+            $message = View::forge('mail/user/checkout/order-success', [
+                'customer' => $customer,
+                'products' => $order->orderProducts,
+            ]);
+
+            $email = Email::forge();
+            $email->to($user->email, $customer['fullname'])
+                ->subject('Your Order Was Successful')
+                ->html_body($message)
+                ->send();
+        }
     }
 }

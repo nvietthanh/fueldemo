@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
@@ -28,4 +29,9 @@ return array(
 	'valid_string'    => 'The valid string rule :rule(:param:1) failed for field :label',
 	'required_with'   => 'The field :label must contain a value if :param:1 contains a value.',
 	'valid_date'      => 'The field :label must contain a valid formatted date.',
+	'category_exists' => 'The selected category does not exist.',
+	'valid_image_file_error' => 'The uploaded file is invalid or failed to upload.',
+	'valid_image_file_type'  => 'The file type of :label must be JPG, JPEG, PNG or GIF.',
+	'valid_image_file_size'  => 'The file size of :label must not exceed :param:1 MB.',
+	'valid_phone_number' => 'The phone number must start with 0 and contain 10 to 11 digits.',
 );

@@ -32,3 +32,6 @@ desktop.ini
 /fuel/app/cache/*/*
 /fuel/app/tmp/
 /fuel/app/config/crypt.php
+
+/fuel/.env
+/public/uploads/

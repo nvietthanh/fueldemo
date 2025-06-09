@@ -1,6 +1,6 @@
 <?php
 
-class Model_Cart extends \Orm\Model
+class Model_Order extends \Orm\Model
 {
 	protected static $_properties = array(
 		"id" => array(
@@ -8,16 +8,12 @@ class Model_Cart extends \Orm\Model
 			"data_type" => "int",
 		),
 		"user_id" => array(
-			"label" => "Category id",
+			"label" => "User id",
 			"data_type" => "int",
 		),
-		"product_id" => array(
-			"label" => "Product id",
-			"data_type" => "int",
-		),
-		"quantity" => array(
-			"label" => "Quantity",
-			"data_type" => "int",
+		"customer" => array(
+			"label" => "Customer",
+			"data_type" => "json",
 		),
 		"created_at" => array(
 			"label" => "Created at",
@@ -42,15 +38,31 @@ class Model_Cart extends \Orm\Model
 		),
 	);
 
-	protected static $_table_name = 'carts';
+	protected static $_table_name = 'orders';
 
 	protected static $_primary_key = array('id');
 
-	protected static $_has_many = array();
+	protected static $_has_many = array(
+		'orderProducts' => [
+			'key_from' => 'id',
+			'model_to' => 'Model_Order_Product',
+			'key_to' => 'order_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		],
+	);
 
 	protected static $_many_many = array();
 
 	protected static $_has_one = array();
 
-	protected static $_belongs_to = array();
+	protected static $_belongs_to = array(
+		'user' => [
+			'key_from' => 'user_id',
+			'model_to' => 'Model_User',
+			'key_to' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		],
+	);
 }

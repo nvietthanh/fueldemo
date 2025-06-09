@@ -27,6 +27,7 @@ class Services_User_Cart
             ->on('carts.product_id', '=', 'products.id')
             ->where('carts.user_id', '=', $userId)
             ->order_by('carts.updated_at', 'DESC')
+            ->order_by('carts.created_at', 'DESC')
             ->as_object()
             ->execute()
             ->as_array();
@@ -51,6 +52,7 @@ class Services_User_Cart
             ]));
         } else {
             $cart->set(array_merge($data, [
+                'quantity' => $data['quantity'] + 1,
                 'updated_at' => time(),
             ]));
         }

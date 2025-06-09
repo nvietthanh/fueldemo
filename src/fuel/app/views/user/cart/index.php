@@ -1,4 +1,4 @@
-<div class="container py-5">
+<div class="container mb-5">
     <h2 class="mb-4">🛒 Your Shopping Cart</h2>
     <?php if (empty($cartItems)): ?>
         <div class="alert alert-info">Your cart is currently empty.</div>

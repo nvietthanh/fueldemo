@@ -18,7 +18,7 @@ class Services_Admin_Product
 
     public function createProduct(array $data): Model_Product
     {
-        $upload_data = UploadHelperr::process_file();
+        $upload_data = UploadHelper::process_file();
 
         if (!$upload_data['success']) {
             throw new ValidationException($upload_data['errors']);

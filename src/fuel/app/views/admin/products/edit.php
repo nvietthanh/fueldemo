@@ -23,12 +23,12 @@
 		<div class="mb-3 d-flex" style="gap: 32px;">
 			<div>
 				<label for="price" class="form-label">Price</label>
-				<input type="number" min="1" name="price" id="price" value="<?= $product->price ?>" class="form-control">
+				<input type="number" name="price" id="price" value="<?= $product->price ?>" class="form-control">
 				<span id="error-price" class="error-message"></span>
 			</div>
 			<div>
 				<label for="quantity" class="form-label">Quantity</label>
-				<input type="number" min="1" name="quantity" id="quantity" value="<?= $product->quantity ?>" class="form-control">
+				<input type="number" name="quantity" id="quantity" value="<?= $product->quantity ?>" class="form-control">
 				<span id="error-quantity" class="error-message"></span>
 			</div>
 		</div>

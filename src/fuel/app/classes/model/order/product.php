@@ -1,15 +1,19 @@
 <?php
 
-class Model_Cart extends \Orm\Model
+class Model_Order_Product extends \Orm\Model
 {
 	protected static $_properties = array(
 		"id" => array(
 			"label" => "Id",
 			"data_type" => "int",
 		),
-		"user_id" => array(
-			"label" => "Category id",
+		"order_id" => array(
+			"label" => "Order id",
 			"data_type" => "int",
+		),
+		"name" => array(
+			"label" => "Name",
+			"data_type" => "varchar",
 		),
 		"product_id" => array(
 			"label" => "Product id",
@@ -17,6 +21,10 @@ class Model_Cart extends \Orm\Model
 		),
 		"quantity" => array(
 			"label" => "Quantity",
+			"data_type" => "int",
+		),
+		"price" => array(
+			"label" => "Price",
 			"data_type" => "int",
 		),
 		"created_at" => array(
@@ -42,7 +50,7 @@ class Model_Cart extends \Orm\Model
 		),
 	);
 
-	protected static $_table_name = 'carts';
+	protected static $_table_name = 'order_products';
 
 	protected static $_primary_key = array('id');
 
@@ -53,4 +61,9 @@ class Model_Cart extends \Orm\Model
 	protected static $_has_one = array();
 
 	protected static $_belongs_to = array();
+
+	public function get_total()
+    {
+        return $this->quantity * $this->price;
+    }
 }

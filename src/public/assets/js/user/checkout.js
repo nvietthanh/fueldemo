@@ -1,6 +1,8 @@
 $('#checkout-form').on('submit', function (event) {
     event.preventDefault();
     
+    clearErrors('checkout-form')
+    
     $.ajax({
         url: $(this).attr('action'),
         method: 'POST',
@@ -17,7 +19,7 @@ $('#checkout-form').on('submit', function (event) {
                 timer: 1500,
                 timerProgressBar: true
             }).then(() => {
-                // window.location.reload()
+                location.href = '/checkout/complete'
             });
         },
         error: function (xhr) {
@@ -37,6 +39,16 @@ $('#checkout-form').on('submit', function (event) {
                 });
     
                 setErrors(errors, 'checkout-form')
+            } else {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true
+                });
             }
         }
     });
