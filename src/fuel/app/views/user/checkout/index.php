@@ -34,6 +34,7 @@
     <div class="row pb-5">
         <h4 class="mb-4">Shipping Information</h4>
         <form id="checkout-form" class="needs-validation" novalidate>
+            <?= Form::csrf(); ?>
             <div class="col-md-6 mb-3">
                 <label for="full-name" class="form-label">Full Name</label>
                 <input type="text" name="fullname" class="form-control" id="full-name">

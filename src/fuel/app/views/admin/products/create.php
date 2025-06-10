@@ -4,6 +4,7 @@
 
 <div class="mt-5">
 	<form id="product-form" action="/admin/products" enctype="multipart/form-data" method="post">
+		<?= Form::csrf(); ?>
 		<div class="mb-3">
 			<label for="image">Image <span>*</span></label>
 			<div class="mb-2">

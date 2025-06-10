@@ -27,7 +27,7 @@ return array(
 	 *
 	 */
 
-	// 'base_url' => null,
+	'base_url' => env('APP_URL'),
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -77,9 +77,9 @@ return array(
 	 *
 	 */
 
-	// 'caching' => false,
+	'caching' => true,
 
-	// 'cache_lifetime' => 3600,
+	'cache_lifetime' => 3600,
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -142,13 +142,13 @@ return array(
 	 *  The default language.
 	 */
 
-	// 'language' => 'en',
+	'language' => 'ja',
 
 	/**
 	 *  Fallback language when file isn't available for default language.
 	 */
 
-	// 'language_fallback' => 'en',
+	'language_fallback' => 'ja',
 
 	/**
 	 *  PHP set_locale() setting. Use null to not set.
@@ -215,12 +215,12 @@ return array(
 		 * ---------------------------------------------------------------------
 		 */
 
-		// 'csrf_autoload'            => false,
-		// 'csrf_autoload_methods'    => array('post', 'put', 'delete'),
-		// 'csrf_bad_request_on_fail' => false,
-		// 'csrf_auto_token'          => false,
-		// 'csrf_token_key'           => 'fuel_csrf_token',
-		// 'csrf_expiration'          => 0,
+		'csrf_autoload'            => true,
+		'csrf_autoload_methods'    => array('post', 'put', 'delete'),
+		'csrf_bad_request_on_fail' => true,
+		'csrf_auto_token'          => true,
+		'csrf_token_key'           => 'fuel_csrf_token',
+		'csrf_expiration'          => 1200,
 
 		/**
 		 * ---------------------------------------------------------------------
