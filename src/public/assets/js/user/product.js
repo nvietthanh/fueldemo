@@ -12,7 +12,7 @@ function showProductDetail(productId) {
 
             const formattedPrice = new Intl.NumberFormat('en-US').format(product.price);
 
-            $('#product-details .product-image').attr('src', product.image_path);
+            $('#product-details .product-image').attr('src', product.image_url);
             $('#product-details .product-name').text(product.name);
             $('#product-details .product-description').text(product.description || 'No description available.');
             $('#product-details .product-price').text(formattedPrice + ' VND');

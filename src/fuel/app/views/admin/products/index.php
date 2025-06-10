@@ -26,7 +26,7 @@
 						<tr data-id="<?= $product->id ?>">
 							<td><?= $product->id ?></td>
 							<td style="width: 90px;">
-								<img src="<?= Uri::base(false) . $product->image_path ?>" alt="" style="width: 100%; height: 100; object-fit: cover;">
+								<img src="<?= get_file_url($product->image_path) ?>" alt="" style="width: 100%; height: 100; object-fit: cover;">
 							</td>
 							<td>
 								<a href="/admin/products/<?= $product->id ?>/edit"><?= htmlspecialchars($product->name) ?></a>

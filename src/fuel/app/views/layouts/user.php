@@ -7,6 +7,7 @@
 
     <!-- Base styles -->
     <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/admin/pagination.css">
 
     <!-- Bootstrap + SweetAlert2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,6 +43,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/cart">Cart</a>
                         </li>
+                        <?php if (\Auth::check()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Logout</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>

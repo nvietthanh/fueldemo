@@ -9,7 +9,7 @@
                 <div class="card shadow-sm mb-3">
                     <div class="card-wrapper">
                         <div class="cart-image">
-                            <img src="<?= Uri::base(false) . $product->image_path ?>" class="img-fluid rounded-start" alt="<?= $product->name ?>">
+                            <img src="<?= get_file_url($product->image_path) ?>" class="img-fluid rounded-start" alt="<?= $product->name ?>">
                         </div>
                         <div class="cart-info">
                             <div class="card-body">

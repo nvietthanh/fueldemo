@@ -8,17 +8,23 @@ class Controller_User_Products extends Controller_Base
 
 	public function action_index()
 	{
+		$total = Model_Product::query()->count();
+
+		$pagination = PaginationHelper::paginate($total, 16);
+
 		$products = Model_Product::query()
 			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
 			->related('category')
 			->order_by('updated_at', 'DESC')
 			->order_by('id', 'DESC')
-			->rows_offset(Pagination::get('offset'))
-			->rows_limit(Pagination::get('per_page'))
+			->rows_offset($pagination['offset'])
+			->rows_limit($pagination['per_page'])
 			->get();
 
-		$data['products'] = $products;
-		$data['pagination'] = PaginationHelper::paginate();
+		$data = [
+			'products' => $products,
+			'pagination' => $pagination,
+		];
 
 		$this->template->title = 'Product list';
 		$this->template->content = View::forge('user/product/index', $data, false);
@@ -37,6 +43,9 @@ class Controller_User_Products extends Controller_Base
 			return $this->jsonResponse(null, 'Product not found', 404);
 		}
 
-		return $this->jsonResponse($product->to_array(), 'Updated successfully!', 200);
+		$product_res = $product->to_array();
+		$product_res['image_url'] = get_file_url($product->image_path);
+
+		return $this->jsonResponse($product_res, 'Updated successfully!', 200);
 	}
 }

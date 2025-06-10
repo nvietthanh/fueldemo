@@ -6,7 +6,7 @@
 			<div class="col-md-3 mb-4">
 				<div class="card shadow-sm border-light rounded">
 					<div class="card-img-top">
-						<img src="<?= Uri::base(false) . $product->image_path ?>" alt="<?php echo e($product->name); ?>">
+						<img src="<?= get_file_url($product->image_path) ?>" alt="<?php echo e($product->name); ?>">
 					</div>
 					<div class="card-body">
 						<div class="d-flex justify-content-between align-items-start">
