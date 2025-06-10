@@ -9,9 +9,17 @@ RUN apk add --no-cache \
     libzip-dev \
     libpng-dev \
     oniguruma-dev \
-    mysql-client \
+    curl-dev \
+    openssl-dev \
     libxml2-dev \
+    mysql-client \
     && docker-php-ext-install \
         pdo \
         pdo_mysql \
+        mbstring \
+        curl \
+        xml \
+        simplexml \
+        intl \
+        zip \
     && rm -rf /var/cache/apk/*

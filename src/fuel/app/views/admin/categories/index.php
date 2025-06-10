@@ -23,7 +23,7 @@
 					<?php foreach ($categories as $category): ?>
 						<tr data-id="<?= $category->id ?>">
 							<td><?= $category->id ?></td>
-							<td><?= htmlspecialchars($category->name) ?></td>
+							<td><?= e($category->name) ?></td>
 							<td><?= !empty($category->created_at) ? date('Y-m-d H:i', $category->created_at) : 'N/A' ?></td>
 							<td><?= !empty($category->updated_at) ? date('Y-m-d H:i', $category->updated_at) : 'N/A' ?></td>
 							<td>
@@ -61,6 +61,8 @@
 <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<form id="create-category-form" class="modal-content">
+			<?= Form::csrf(); ?>
+
 			<div class="modal-header">
 				<h5 class="modal-title" id="createCategoryLabel">Create Category</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -84,6 +86,8 @@
 <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<form id="edit-category-form" class="modal-content">
+			<?= Form::csrf(); ?>
+
 			<div class="modal-header">
 				<h5 class="modal-title" id="editCategoryLabel">Create Category</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

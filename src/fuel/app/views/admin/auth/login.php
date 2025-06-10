@@ -5,12 +5,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin login</title>
-    <link rel="stylesheet" href="/assets/css/base.css">
-    <link rel="stylesheet" href="/assets/css/admin/style.css">
-    <link rel="stylesheet" href="/assets/css/admin/form.css">
-    <link rel="stylesheet" href="/assets/css/admin/pagination.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/base.css">
+	<link rel="stylesheet" href="/assets/css/admin/style.css">
+	<link rel="stylesheet" href="/assets/css/admin/form.css">
+	<link rel="stylesheet" href="/assets/css/admin/pagination.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,6 +21,8 @@
 			<?php $errors = Session::get_flash('errors'); ?>
 
 			<form action="/admin/login" method="post">
+				<?= Form::csrf(); ?>
+
 				<input type="hidden" name="previous_url" value="<?= Input::get('previous_url') ?>">
 
 				<div class="mb-3">

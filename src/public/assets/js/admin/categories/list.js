@@ -1,6 +1,8 @@
 
 $('#create-category-form').on('submit', function (event) {
     event.preventDefault();
+
+    fuel_set_csrf_token(this)
     
     const formData = new FormData($(this)[0])
     
@@ -9,6 +11,8 @@ $('#create-category-form').on('submit', function (event) {
 
 $('#edit-category-form').on('submit', function (event) {
     event.preventDefault();
+
+    fuel_set_csrf_token(this)
     
     const formData = new FormData($(this)[0])
     const id = $('#editCategoryModal').attr('data-id')

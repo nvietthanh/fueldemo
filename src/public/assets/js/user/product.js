@@ -46,6 +46,7 @@ function addProductCart(productId) {
     const formData = new FormData()
     formData.append('product_id', productId)
     formData.append('quantity', 1)
+    formData.append('fuel_csrf_token', fuel_csrf_token())
 
     $.ajax({
         url: '/cart/add',
@@ -54,7 +55,7 @@ function addProductCart(productId) {
         processData: false,
         contentType: false,
         success: function(response) {
-            location.href = '/cart'
+            // location.href = '/cart'
         },
         error: function(xhr) {
             const response = xhr.responseJSON
