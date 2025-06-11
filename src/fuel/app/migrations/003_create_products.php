@@ -19,6 +19,10 @@ class Create_products
 			'deleted_at' => array('constraint' => 11, 'null' => true, 'type' => 'int', 'unsigned' => true),
 		), array('id'));
 
+		\DB::query("CREATE INDEX idx_products_name ON products(name)")->execute();
+		\DB::query("CREATE INDEX idx_products_category_id ON products(category_id)")->execute();
+		\DB::query("CREATE INDEX idx_products_quantity ON products(quantity)")->execute();
+
 		\DB::query("
 			ALTER TABLE `products`
 			ADD CONSTRAINT `fk_products_category`

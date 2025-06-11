@@ -15,6 +15,9 @@ class Create_carts
 			'updated_at' => array('constraint' => 11, 'null' => true, 'type' => 'int', 'unsigned' => true),
 		), array('id'));
 
+		\DB::query("CREATE INDEX idx_carts_user_id ON carts(user_id)")->execute();
+		\DB::query("CREATE INDEX idx_carts_product_id ON carts(product_id)")->execute();
+
 		\DB::query("
 			ALTER TABLE `carts`
 			ADD CONSTRAINT `fk_carts_user`

@@ -1,6 +1,8 @@
 $('#checkout-form').on('submit', function (event) {
     event.preventDefault();
-    
+
+    fuel_set_csrf_token(this)
+
     clearErrors('checkout-form')
     
     $.ajax({
