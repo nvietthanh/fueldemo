@@ -1,6 +1,6 @@
 <?php
 
-namespace Facades;
+namespace Factory;
 
 use Fuel\Core\Config;
 use Storages\Interfaces\StorageDriverInterface;

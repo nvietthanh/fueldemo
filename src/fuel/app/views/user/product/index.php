@@ -6,14 +6,14 @@
 			<div class="col-md-3 mb-4">
 				<div class="card shadow-sm border-light rounded">
 					<div class="card-img-top">
-						<img src="<?= get_file_url($product->image_path) ?>" alt="<?php echo e($product->name); ?>">
+						<img src="<?= get_file_url($product->image_path) ?>" alt="<?= e($product->name); ?>">
 					</div>
 					<div class="card-body">
 						<div class="d-flex justify-content-between align-items-start">
-							<h5 class="card-title product-title"><?php echo e($product->name); ?></h5>
-							<p class="category text-muted mb-0"><?php echo e($product->category->name); ?></p>
+							<h5 class="card-title product-title"><?= e($product->name); ?></h5>
+							<p class="category text-muted mb-0"><?= e($product->category->name); ?></p>
 						</div>
-						<p class="card-text"><strong><?php echo e(number_format($product->price, 0, '.', ',')); ?> VND</strong></p>
+						<p class="card-text"><strong><?= e(number_format($product->price, 0, '.', ',')); ?> VND</strong></p>
 						<div class="d-flex" style="gap: 12px;">
 							<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#showProduct"
 								onclick="showProductDetail(<?= $product->id ?>)">

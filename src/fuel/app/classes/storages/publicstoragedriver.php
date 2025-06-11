@@ -12,8 +12,7 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public function __construct()
     {
-        Config::load('disk', true);
-        $this->config = Config::get('disk.public');
+        //
     }
 
     protected static function getInstance(): self
@@ -65,11 +64,11 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public static function url(string $path): string
     {
-        $instance = static::getInstance();
+        static::getInstance();
 
-        $baseUrl = rtrim($instance->config['url'], '/');
-        $cleanPath = ltrim($path, '/');
+        $base_url = rtrim(Config::get('base_url'), '/');
+        $clean_path = ltrim($path, '/');
 
-        return "{$baseUrl}/{$cleanPath}";
+        return "{$base_url}/storage/{$clean_path}";
     }
 }

@@ -29,11 +29,11 @@
 								<img src="<?= get_file_url($product->image_path) ?>" alt="" style="width: 100%; height: 100; object-fit: cover;">
 							</td>
 							<td>
-								<a href="/admin/products/<?= $product->id ?>/edit"><?= htmlspecialchars($product->name) ?></a>
+								<a href="/admin/products/<?= $product->id ?>/edit"><?= e($product->name) ?></a>
 							</td>
 							<td><?= number_format($product->price ?? 0) ?></td>
 							<td><?= $product->quantity ?? 0 ?></td>
-							<td><?= isset($product->category) ? htmlspecialchars($product->category->name) : 'N/A' ?></td>
+							<td><?= e($product->category->name) ?></td>
 							<td><?= !empty($product->created_at) ? date('Y-m-d H:i', $product->created_at) : 'N/A' ?></td>
 							<td><?= !empty($product->updated_at) ? date('Y-m-d H:i', $product->updated_at) : 'N/A' ?></td>
 							<td>

@@ -1,6 +1,6 @@
 <?php
 
-use Facades\Storage;
+use Factory\Storage;
 
 if (!function_exists('env')) {
     function env($key, $default = null)
@@ -22,19 +22,6 @@ if (!function_exists('env')) {
         }
 
         return $value;
-    }
-}
-
-if (!function_exists('dd')) {
-    function dd(...$vars)
-    {
-        http_response_code(500);
-        echo '<pre style="background:#111;color:#0f0;padding:10px;border-radius:4px;">';
-        foreach ($vars as $var) {
-            print_r($var);
-        }
-        echo '</pre>';
-        die;
     }
 }
 
