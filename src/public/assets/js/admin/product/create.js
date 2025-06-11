@@ -25,6 +25,8 @@ $(document).ready(function () {
 
         clearErrors('product-form')
 
+        fuel_set_csrf_token(this)
+
         const form = $(this)[0];
         const formData = new FormData();
 

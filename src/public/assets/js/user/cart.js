@@ -9,6 +9,7 @@ function goToCheckout() {
 function handleRemoveCart(productId) {
     const formData = new FormData()
     formData.append('product_id', productId)
+    formData.append('fuel_csrf_token', fuel_csrf_token()); 
 
     $.ajax({
         url: '/cart/remove',
@@ -74,6 +75,7 @@ function handleCallAjax(productId, quantity) {
     const formData = new FormData()
     formData.append('product_id', productId)
     formData.append('quantity', quantity)
+    formData.append('fuel_csrf_token', fuel_csrf_token()); 
 
     $.ajax({
         url: '/cart/update',

@@ -76,6 +76,8 @@
             <?= Asset::js($uri); ?>
         <?php endforeach; ?>
     <?php endif; ?>
+    <?= Security::js_fetch_token() ?>
+    <?= Security::js_set_token() ?>
 </body>
 
 </html>

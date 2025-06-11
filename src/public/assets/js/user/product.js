@@ -46,6 +46,7 @@ function addProductCart(productId) {
     const formData = new FormData()
     formData.append('product_id', productId)
     formData.append('quantity', 1)
+    formData.append('fuel_csrf_token', fuel_csrf_token())
 
     $.ajax({
         url: '/cart/add',

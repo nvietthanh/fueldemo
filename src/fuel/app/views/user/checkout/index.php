@@ -13,7 +13,7 @@
                         </div>
                         <div class="cart-info">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $product->name ?></h5>
+                                <h5 class="card-title"><?= e($product->name) ?></h5>
                                 <p class="card-text mb-1"><strong>Price:</strong> <?= number_format($product->price) ?> VND</p>
                                 <p class="card-text"><strong>Quantity:</strong> <?= $product->quantity ?></p>
                             </div>

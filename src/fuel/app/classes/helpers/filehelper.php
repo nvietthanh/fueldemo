@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use Facades\Storage;
+use Factory\Storage;
 
 class FileHelper
 {

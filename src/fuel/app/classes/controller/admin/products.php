@@ -1,5 +1,6 @@
 <?php
 
+use Filter\Admin\ProductFilter;
 use Fuel\Core\Input;
 use Helpers\PaginationHelper;
 
@@ -18,20 +19,22 @@ class Controller_Admin_Products extends Controller_Admin_Common_Auth
 
 	public function action_index()
 	{
-		$total = Model_Product::query()->count();
+		$query = Model_Product::filters(ProductFilter::class, Input::get())
+			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at');
 
+		$total = $query->count();
 		$pagination = PaginationHelper::paginate($total, 10);
 
-		$products = Model_Product::query()
-			->select('id', 'name', 'image_path', 'price', 'quantity', 'category_id', 'created_at', 'updated_at')
-			->related('category')
+		$products = $query->related('category')
 			->order_by('updated_at', 'DESC')
 			->order_by('id', 'DESC')
 			->rows_offset($pagination['offset'])
 			->rows_limit($pagination['per_page'])
 			->get();
- 
+		$categories = Model_Category::find('all');
+
 		$data = [
+			'categories' => $categories,
 			'products' => $products,
 			'pagination' => $pagination,
 		];
