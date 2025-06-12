@@ -10,10 +10,10 @@
 			<label for="name" class="mr-2">Name:</label>
 			<input type="text" name="name" id="name" class="form-control" value="<?= Input::get('name') ?>" placeholder="Search by name">
 		</div>
-		<div class="form-group mr-3" style="width: 160px;">
+		<div class="form-group mr-3" style="width: 190px;">
 			<label for="categories" class="mr-2">Categories:</label>
-			<select name="category_id" id="categories" class="form-control">
-				<option value="">-- Select Category --</option>
+			<select name="category_id" id="categories" class="form-select">
+				<option value="">-- All Category --</option>
 				<?php foreach ($categories as $category): ?>
 					<option value="<?= $category->id ?>" <?= Input::get('category_id') == $category->id ? 'selected' : '' ?>>
 						<?= e($category->name) ?>

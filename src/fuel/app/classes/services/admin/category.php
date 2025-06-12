@@ -13,7 +13,7 @@ class Services_Admin_Category
         return self::$instance;
     }
 
-    public function createCategory(array $data): Model_Category
+    public function create_category(array $data): Model_Category
     {
         $store_data = [
             'name' => $data['name'],
@@ -26,7 +26,7 @@ class Services_Admin_Category
         return $category;
     }
 
-    public function updateCategory(Model_Category $category, array $data): Model_Category
+    public function update_category(Model_Category $category, array $data): Model_Category
     {
         $update_data = [
             'name' => $data['name'],

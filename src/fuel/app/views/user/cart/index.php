@@ -1,10 +1,10 @@
 <div class="container mb-5">
     <h2 class="mb-4">🛒 Your Shopping Cart</h2>
-    <?php if (empty($cartItems)): ?>
+    <?php if (empty($cart_items)): ?>
         <div class="alert alert-info">Your cart is currently empty.</div>
     <?php else: ?>
         <?php $grandTotal = 0; ?>
-        <?php foreach ($cartItems as $item): ?>
+        <?php foreach ($cart_items as $item): ?>
             <?php $subtotal = $item->price * $item->quantity; ?>
             <?php $grandTotal += $subtotal; ?>
 
@@ -43,7 +43,7 @@
         <button class="btn btn-outline-secondary" onclick="goToShopping()">
             ← Continue Shopping
         </button>
-        <?php if (!empty($cartItems)): ?>
+        <?php if (!empty($cart_items)): ?>
             <button class="btn btn-success" onclick="goToCheckout()">
                 Checkout
             </button>

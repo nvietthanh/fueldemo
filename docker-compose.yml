@@ -4,6 +4,10 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     container_name: fuelphp-app
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./src:/var/www/html
+    working_dir: /var/www/html
     depends_on:
       - db
       - redis

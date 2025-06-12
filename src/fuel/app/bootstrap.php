@@ -60,10 +60,10 @@ if ($env_file && file_exists($env_file)) {
 }
 
 set_exception_handler(function ($e) {
-	$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-	$isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
+	$is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+	$is_json = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
 
-	if ($isAjax || $isJson) {
+	if ($is_ajax || $is_json) {
 		if ($e instanceof \Exception\ValidationException || $e instanceof \Exception\NotFoundException) {
 			$response = $e->toJson();
 			$status = $e->getStatus();

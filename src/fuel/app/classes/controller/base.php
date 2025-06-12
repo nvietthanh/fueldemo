@@ -9,7 +9,7 @@ class Controller_Base extends Controller_Template
 
     public function after($response)
     {
-        DeferredJobDispatcher::dispatchAll();
+        DeferredJobDispatcher::dispatch_all();
 
         return parent::after($response);
     }

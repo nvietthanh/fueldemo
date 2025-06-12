@@ -6,7 +6,7 @@ use Rules\ImageRules;
 
 class Requests_Admin_Product_Store extends Requests_Common_Base
 {
-	public static function setValidator(Validation $val): Validation
+	public static function set_validator(Validation $val): Validation
 	{
 		$val->add_callable(CategoryRules::forge('category_rule'));
 		$val->add_callable(ImageRules::forge('image_rule'));

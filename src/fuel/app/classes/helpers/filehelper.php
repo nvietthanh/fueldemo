@@ -15,7 +15,7 @@ class FileHelper
      */
     public static function upload(array $file, string $folder_path): string
     {
-        $storage_path = self::createPath($file, $folder_path);
+        $storage_path = self::create_path($file, $folder_path);
 
         $success = Storage::upload($storage_path, $file);
 
@@ -26,7 +26,7 @@ class FileHelper
         return $storage_path;
     }
 
-    private static  function createPath(array $file, string $folder_path): string
+    private static  function create_path(array $file, string $folder_path): string
     {
         $year = date('Y');
         $month = date('m');
