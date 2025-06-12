@@ -11,7 +11,7 @@ class DeferredJobDispatcher
         static::$queued[] = $job;
     }
 
-    public static function dispatchAll(): void
+    public static function dispatch_all(): void
     {
         foreach (static::$queued as $job) {
             $class_name = $job['class'];

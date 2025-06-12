@@ -5,7 +5,7 @@ use Rules\PhoneRules;
 
 class Requests_User_Checkout_Store extends Requests_Common_Base
 {
-    public static function setValidator(Validation $val): Validation
+    public static function set_validator(Validation $val): Validation
     {
         $val->add_callable(PhoneRules::forge('phone_rules'));
 

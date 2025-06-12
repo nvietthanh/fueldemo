@@ -23,6 +23,8 @@ $(document).ready(function () {
     $('#product-form').on('submit', function (event) {
         event.preventDefault();
 
+        fuel_set_csrf_token(this)
+
         clearErrors('product-form')
 
         const form = $(this)[0];
@@ -53,7 +55,7 @@ $(document).ready(function () {
                     timer: 1500,
                     timerProgressBar: true
                 }).then(() => {
-                    window.location.href = '/admin/products';
+                    // window.location.href = '/admin/products';
                 });
             },
             error: function (xhr) {

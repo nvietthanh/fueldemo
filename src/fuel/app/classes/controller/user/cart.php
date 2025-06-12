@@ -2,7 +2,10 @@
 
 class Controller_User_Cart extends Controller_User_Common_Auth
 {
-	protected $cartService;
+	/**
+	 * @var cart_service Handles business logic for carts
+	 */
+	protected $cart_service;
 
 	public $template = 'layouts/user';
 
@@ -10,14 +13,16 @@ class Controller_User_Cart extends Controller_User_Common_Auth
 	{
 		parent::before();
 
-		$this->cartService = Services_User_Cart::forge();
+		$this->cart_service = Services_User_Cart::forge();
 	}
 
 	public function action_index()
 	{
-		$cartItems = $this->cartService->getCart();
+		$cart_items = $this->cart_service->get_cart();
 
-		$data['cartItems'] = $cartItems;
+		$data = [
+			'cart_items' => $cart_items,
+		];
 
 		$this->template->title = 'Cart';
 		$this->template->content = View::forge('user/cart/index', $data, false);
@@ -29,34 +34,34 @@ class Controller_User_Cart extends Controller_User_Common_Auth
 
 	public function action_store()
 	{
-		$input = Input::post();
+		$post = Input::post();
 
-		$inputVal = Requests_User_Cart_Store::validate($input);
+		$post_val = Requests_User_Cart_Store::validate($post);
 
-		$this->cartService->storeCart($inputVal);
+		$this->cart_service->store_cart($post_val);
 
-		return $this->jsonResponse(null);
+		return $this->json_response(null);
 	}
 
 	public function action_update()
 	{
-		$input = Input::post();
+		$post = Input::post();
 
-		$inputVal = Requests_User_Cart_Update::validate($input);
+		$post_val = Requests_User_Cart_Update::validate($post);
 
-		$this->cartService->updateCart($inputVal);
+		$this->cart_service->update_cart($post_val);
 
-		return $this->jsonResponse(null, 'Update cart successfully!', 200);
+		return $this->json_response(null, 'Update cart successfully!', 200);
 	}
 
 	public function action_delete()
 	{
-		$input = Input::delete();
+		$delete = Input::delete();
 
-		$inputVal = Requests_User_Cart_Delete::validate($input);
+		$delete_val = Requests_User_Cart_Delete::validate($delete);
 
-		$this->cartService->removeCart($inputVal);
+		$this->cart_service->remove_cart($delete_val);
 
-		return $this->jsonResponse(null, 'Deleted successfully!', 200);
+		return $this->json_response(null, 'Deleted successfully!', 200);
 	}
 }

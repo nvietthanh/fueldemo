@@ -30,7 +30,7 @@ class S3StorageDriver implements StorageDriverInterface
         ]);
     }
 
-    protected static function getInstance(): self
+    protected static function get_instance(): self
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -41,7 +41,7 @@ class S3StorageDriver implements StorageDriverInterface
 
     public static function upload(string $path, array $file): bool
     {
-        $instance = static::getInstance();
+        $instance = static::get_instance();
 
         $fileTmpPath = $file['tmp_name'];
         $fileContents = file_get_contents($fileTmpPath);
@@ -64,7 +64,7 @@ class S3StorageDriver implements StorageDriverInterface
 
     public static function delete(string $path): bool
     {
-        $instance = static::getInstance();
+        $instance = static::get_instance();
 
         try {
             $instance->client->deleteObject([
@@ -80,7 +80,7 @@ class S3StorageDriver implements StorageDriverInterface
 
     public static function exists(string $path): bool
     {
-        $instance = static::getInstance();
+        $instance = static::get_instance();
 
         try {
             return $instance->client->doesObjectExist(
@@ -94,7 +94,7 @@ class S3StorageDriver implements StorageDriverInterface
 
     public static function url(string $path): string
     {
-        $instance = static::getInstance();
+        $instance = static::get_instance();
 
         $endpoint = rtrim($instance->config['endpoint'], '/');
         $bucket   = trim($instance->config['bucket'], '/');

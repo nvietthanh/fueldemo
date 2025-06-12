@@ -16,58 +16,62 @@ class Services_User_Cart
         return self::$instance;
     }
 
-    public function getCart(): array
+    public function get_cart(): array
     {
-        $authUser = Auth::get_user_id();
-        $userId = $authUser[1];
+        $auth_user = Auth::get_user_id();
+        $user_id = $auth_user[1];
 
-        $cartItems = DB::select('carts.product_id', 'carts.quantity', 'products.name', 'products.price', 'products.image_path', 'carts.updated_at')
+        $cart_items = DB::select('carts.product_id', 'carts.quantity', 'products.name', 'products.price', 'products.image_path', 'carts.updated_at')
             ->from('carts')
             ->join('products', 'LEFT')
             ->on('carts.product_id', '=', 'products.id')
-            ->where('carts.user_id', '=', $userId)
+            ->where('carts.user_id', '=', $user_id)
             ->order_by('carts.updated_at', 'DESC')
             ->order_by('carts.created_at', 'DESC')
             ->as_object()
             ->execute()
             ->as_array();
 
-        return $cartItems;
+        return $cart_items;
     }
 
-    public function storeCart(array $data): void
+    public function store_cart(array $data): void
     {
-        Model_Product::findOrfail($data['product_id']);
-        $authUser = Auth::get_user_id();
-        $userId = $authUser[1];
+        Model_Product::find_or_fail($data['product_id']);
+        $auth_user = Auth::get_user_id();
+        $user_id = $auth_user[1];
 
         $cart = Model_Cart::query()
-            ->where('user_id', $userId)
+            ->where('user_id', $user_id)
             ->where('product_id', $data['product_id'])
             ->get_one();
 
         if (is_null($cart)) {
-            $cart = Model_Cart::forge(array_merge($data, [
-                'user_id' => $userId,
-            ]));
+            $data_update = array_merge($data, [
+                'user_id' => $user_id,
+            ]);
+
+            $cart = Model_Cart::forge($data_update);
         } else {
-            $cart->set(array_merge($data, [
+            $data_store = array_merge($data, [
                 'quantity' => $data['quantity'] + 1,
                 'updated_at' => time(),
-            ]));
+            ]);
+
+            $cart->set($data_store);
         }
 
         $cart->save();
     }
 
-    public function updateCart(array $data): void
+    public function update_cart(array $data): void
     {
-        Model_Product::findOrfail($data['product_id']);
-        $authUser = Auth::get_user_id();
-        $userId = $authUser[1];
+        Model_Product::find_or_fail($data['product_id']);
+        $auth_user = Auth::get_user_id();
+        $user_id = $auth_user[1];
 
         $cart = Model_Cart::query()
-            ->where('user_id', $userId)
+            ->where('user_id', $user_id)
             ->where('product_id', $data['product_id'])
             ->get_one();
 
@@ -77,13 +81,13 @@ class Services_User_Cart
         }
     }
 
-    public function removeCart(array $data): void
+    public function remove_cart(array $data): void
     {
-        $authUser = Auth::get_user_id();
-        $userId = $authUser[1];
+        $auth_user = Auth::get_user_id();
+        $user_id = $auth_user[1];
 
         $cart = Model_Cart::query()
-            ->where('user_id', $userId)
+            ->where('user_id', $user_id)
             ->where('product_id', $data['product_id'])
             ->get_one();
 

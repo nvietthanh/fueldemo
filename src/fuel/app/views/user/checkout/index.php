@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <h4 class="mb-4">Product Details</h4>
             <?php $grandTotal = 0; ?>
-            <?php foreach ($cartItems as $product): ?>
+            <?php foreach ($cart_items as $product): ?>
                 <?php $grandTotal += $product->total; ?>
                 <div class="card shadow-sm mb-3">
                     <div class="card-wrapper">

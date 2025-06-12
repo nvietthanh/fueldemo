@@ -18,7 +18,7 @@ class Services_Admin_Product
         return self::$instance;
     }
 
-    public function createProduct(array $data): Model_Product
+    public function create_product(array $data): Model_Product
     {
         $image_path = FileHelper::upload($data['image_file'], 'products');
 
@@ -38,7 +38,7 @@ class Services_Admin_Product
         return $product;
     }
 
-    public function updateProduct(Model_Product $product, array $data): Model_Product
+    public function update_product(Model_Product $product, array $data): Model_Product
     {
         $update_data = [
             'name'        => $data['name'] ?? null,

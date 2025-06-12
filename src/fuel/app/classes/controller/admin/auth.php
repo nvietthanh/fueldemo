@@ -7,7 +7,8 @@ class Controller_Admin_Auth extends Controller_Admin_Common_Auth
 		if (Input::method() == 'POST') {
 			$val = Validation::forge();
 
-			$val->add('email', 'email')->add_rule('required');
+			$val->add('email', 'email')
+				->add_rule('required');
 			$val->add('password', 'password')->add_rule('required');
 	
 			if ($val->run()) {

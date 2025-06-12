@@ -23,6 +23,8 @@ $(document).ready(function () {
     $('#product-form').on('submit', function (event) {
         event.preventDefault();
 
+        fuel_set_csrf_token(this)
+
         clearErrors('product-form')
 
         const form = $(this)[0];

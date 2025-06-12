@@ -6,7 +6,10 @@ use Helpers\PaginationHelper;
 
 class Controller_Admin_Products extends Controller_Admin_Common_Auth
 {
-	protected $productService;
+	/**
+	 * @var product_service Handles business logic for products
+	 */
+	protected $product_service;
 
 	public $template = 'layouts/admin';
 
@@ -14,7 +17,7 @@ class Controller_Admin_Products extends Controller_Admin_Common_Auth
 	{
 		parent::before();
 
-		$this->productService = Services_Admin_Product::forge();
+		$this->product_service = Services_Admin_Product::forge();
 	}
 
 	public function action_index()
@@ -60,22 +63,23 @@ class Controller_Admin_Products extends Controller_Admin_Common_Auth
 
 	public function action_store()
 	{
-		$input = Input::post();
+		$post = Input::post();
+		$file = Input::file();
 
-		if (!empty($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
-			$input['image_file'] = $_FILES['image_file'];
+		if (!empty($file['image_file']) && $file['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+			$post['image_file'] = $file['image_file'];
 		}
 
-		$inputVal = Requests_Admin_Product_Store::validate($input);
+		$post_val = Requests_Admin_Product_Store::validate($post);
 
-		$this->productService->createProduct($inputVal);
+		$this->product_service->create_product($post_val);
 
-		return $this->jsonResponse(null, 'Created successfully!', 200);
+		return $this->json_response(null, 'Created successfully!', 200);
 	}
 
 	public function action_edit(string $id)
 	{
-		$product = Model_Product::findOrFail($id);
+		$product = Model_Product::find_or_fail($id);
 
 		$data['product'] = $product;
 		$data['categories'] = Model_Category::find('all');
@@ -91,27 +95,28 @@ class Controller_Admin_Products extends Controller_Admin_Common_Auth
 
 	public function action_update(string $id)
 	{
-		$product = Model_Product::findOrFail($id);
+		$product = Model_Product::find_or_fail($id);
 
-		$input = Input::post();
+		$post = Input::post();
+		$file = Input::file();
 
-		if (!empty($_FILES['image_file']) && $_FILES['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
-			$input['image_file'] = $_FILES['image_file'];
+		if (!empty($file['image_file']) && $file['image_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+			$post['image_file'] = $file['image_file'];
 		}
 
-		$inputVal = Requests_Admin_Product_Update::validate($input);
+		$post_val = Requests_Admin_Product_Update::validate($post);
 
-		$this->productService->updateProduct($product, $inputVal);
+		$this->product_service->update_product($product, $post_val);
 
-		return $this->jsonResponse(null, 'Updated successfully!', 200);
+		return $this->json_response(null, 'Updated successfully!', 200);
 	}
 
 	public function action_delete(string $id)
 	{
-		$product = Model_Product::findOrfail($id);
+		$product = Model_Product::find_or_fail($id);
 
 		$product->delete();
 
-		return $this->jsonResponse(null, 'Deleted successfully');
+		return $this->json_response(null, 'Deleted successfully');
 	}
 }
