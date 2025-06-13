@@ -12,17 +12,17 @@ trait ResponseTrait
      * 
      * @return Response
      */
-    public static function jsonResponse(?array $data = [], string $message = 'Success', int $statusCode = 200, array $headers = [])
+    public static function json_response(?array $data = [], string $message = 'Success', int $status_code = 200, array $headers = [])
     {
         $body = [
-            'status'  => $statusCode,
+            'status'  => $status_code,
             'message' => $message,
             'data'    => $data,
         ];
 
         return Response::forge(
             json_encode($body, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
-            $statusCode,
+            $status_code,
             $headers
         )->set_header('Content-Type', 'application/json');
     }
@@ -32,20 +32,20 @@ trait ResponseTrait
      * 
      * @return Response
      */
-    public static function xmlResponse(?array $data = [], string $message = 'Success', int $statusCode = 200, array $headers = [])
+    public static function xml_response(?array $data = [], string $message = 'Success', int $status_code = 200, array $headers = [])
     {
-        $responseData = [
-            'status'  => $statusCode,
+        $response_data = [
+            'status'  => $status_code,
             'message' => $message,
             'data'    => $data,
         ];
 
         $xml = new SimpleXMLElement('<response/>');
-        self::arrayToXml($responseData, $xml);
+        self::array_to_xml($response_data, $xml);
 
         return Response::forge(
             $xml->asXML(),
-            $statusCode,
+            $status_code,
             $headers
         )->set_header('Content-Type', 'application/xml');
     }
@@ -53,13 +53,13 @@ trait ResponseTrait
     /**
      * Convert array to XML.
      */
-    private function arrayToXml(array $data, SimpleXMLElement &$xml)
+    private function array_to_xml(array $data, SimpleXMLElement &$xml)
     {
         foreach ($data as $key => $value) {
             $key = is_numeric($key) ? "item{$key}" : $key;
             if (is_array($value)) {
                 $subnode = $xml->addChild($key);
-                $this->arrayToXml($value, $subnode);
+                $this->array_to_xml($value, $subnode);
             } else {
                 $xml->addChild($key, htmlspecialchars((string)$value));
             }

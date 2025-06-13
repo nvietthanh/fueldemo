@@ -2,7 +2,7 @@
 
 abstract class Model_Base extends \Orm\Model
 {
-    public static function findOrfail(string $id)
+    public static function find_or_fail(string $id)
     {
         $model = self::find($id);
 

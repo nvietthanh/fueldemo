@@ -40,12 +40,12 @@ class Controller_User_Products extends Controller_Base
 			->get_one();
 
 		if (!$product) {
-			return $this->jsonResponse(null, 'Product not found', 404);
+			return $this->json_response(null, 'Product not found', 404);
 		}
 
-		$product_res = $product->to_array();
-		$product_res['image_url'] = get_file_url($product->image_path);
+		$data_response = $product->to_array();
+		$data_response['image_url'] = get_file_url($product->image_path);
 
-		return $this->jsonResponse($product_res, 'Updated successfully!', 200);
+		return $this->json_response($data_response, 'Updated successfully!', 200);
 	}
 }

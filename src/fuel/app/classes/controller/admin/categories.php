@@ -4,7 +4,10 @@ use Helpers\PaginationHelper;
 
 class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 {
-	protected $categoryService;
+	/**
+	 * @var category_service Handles business logic for categories
+	 */
+	protected $category_service;
 
 	public $template = 'layouts/admin';
 
@@ -12,13 +15,12 @@ class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 	{
 		parent::before();
 
-		$this->categoryService = Services_Admin_Category::forge();
+		$this->category_service = new Services_Admin_Category();
 	}
 
 	public function action_index()
 	{
 		$total = Model_Category::query()->count();
-
 		$pagination = PaginationHelper::paginate($total, 10);
 
 		$categories = Model_Category::query()
@@ -43,13 +45,13 @@ class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 
 	public function action_store()
 	{
-		$input = Input::post();
+		$post = Input::post();
 
-		$inputVal = Requests_Admin_Category_Store::validate($input);
+		$post_val = Requests_Admin_Category_Store::validate($post);
 
-		$this->categoryService->createCategory($inputVal);
+		$this->category_service->create_category($post_val);
 
-		return $this->jsonResponse(null, 'Created successfully!', 200);
+		return $this->json_response(null, 'Created successfully!', 200);
 	}
 
 	public function action_show(string $id)
@@ -57,23 +59,23 @@ class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 		$category = Model_Category::find($id);
 
 		if (!$category) {
-			return $this->jsonResponse(null, 'Product not found', 404);
+			return $this->json_response(null, 'Product not found', 404);
 		}
 
-		return $this->jsonResponse($category->to_array());
+		return $this->json_response($category->to_array());
 	}
 
 	public function action_update(string $id)
 	{
-		$category = Model_Category::findOrfail($id);
+		$category = Model_Category::find_or_fail($id);
 
-		$input = Input::post();
+		$post = Input::post();
 
-		$inputVal = Requests_Admin_Category_Store::validate($input);
+		$post_val = Requests_Admin_Category_Store::validate($post);
 
-		$this->categoryService->updateCategory($category, $inputVal);
+		$this->category_service->update_category($category, $post_val);
 
-		return $this->jsonResponse(null, 'Updated successfully!', 200);
+		return $this->json_response(null, 'Updated successfully!', 200);
 	}
 
 	public function action_delete(string $id)
@@ -84,14 +86,14 @@ class Controller_Admin_Categories extends Controller_Admin_Common_Auth
 			->get_one();
 
 		if (!$category) {
-			return $this->jsonResponse(null, 'Not found', 404);
+			return $this->json_response(null, 'Not found', 404);
 		}
 		if (count($category->products)) {
-			return $this->jsonResponse(null, 'Forbidden', 403);
+			return $this->json_response(null, 'Forbidden', 403);
 		}
 
 		$category->delete();
 
-		return $this->jsonResponse(null, 'Deleted successfully');
+		return $this->json_response(null, 'Deleted successfully');
 	}
 }

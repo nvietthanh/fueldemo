@@ -24,7 +24,7 @@ class Controller_Admin_Job extends Controller_Base
 			$result[$status] = $jobs;
 		}
 
-		return $this->jsonResponse([
+		return $this->json_response([
 		    'status' => $status,
 		    'result'   => $result,
 		]);

@@ -12,7 +12,7 @@ class ValidationHelper
      * @param \Validation $validation
      * @return array
      */
-    public static function getErrors(Validation $validation)
+    public static function get_errors(Validation $validation)
     {
         $errors = [];
 

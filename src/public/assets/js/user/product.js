@@ -55,7 +55,7 @@ function addProductCart(productId) {
         processData: false,
         contentType: false,
         success: function(response) {
-            // location.href = '/cart'
+            location.href = '/cart'
         },
         error: function(xhr) {
             const response = xhr.responseJSON

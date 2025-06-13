@@ -15,7 +15,7 @@ class PublicStorageDriver implements StorageDriverInterface
         //
     }
 
-    protected static function getInstance(): self
+    protected static function get_instance(): self
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -26,7 +26,7 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public static function upload(string $path, array $file): bool
     {
-        static::getInstance();
+        static::get_instance();
 
         $fileTmpPath = $file['tmp_name'];
         $fileContents = file_get_contents($fileTmpPath);
@@ -42,7 +42,7 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public static function delete(string $path): bool
     {
-        static::getInstance();
+        static::get_instance();
 
         $fullPath = DOCROOT . '/storage/' . ltrim($path, '/');
 
@@ -55,7 +55,7 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public static function exists(string $path): bool
     {
-        static::getInstance();
+        static::get_instance();
 
         $fullPath = DOCROOT . '/storage/' . ltrim($path, '/');
 
@@ -64,7 +64,7 @@ class PublicStorageDriver implements StorageDriverInterface
 
     public static function url(string $path): string
     {
-        static::getInstance();
+        static::get_instance();
 
         $base_url = rtrim(Config::get('base_url'), '/');
         $clean_path = ltrim($path, '/');

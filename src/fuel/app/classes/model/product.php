@@ -1,7 +1,11 @@
 <?php
 
+use Traits\Filterable;
+
 class Model_Product extends Model_Base
 {
+	use Filterable;
+
 	protected static $_properties = array(
 		"id" => array(
 			"label" => "Id",

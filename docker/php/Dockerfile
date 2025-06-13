@@ -23,3 +23,12 @@ RUN apk add --no-cache \
         intl \
         zip \
     && rm -rf /var/cache/apk/*
+
+COPY ./src /var/www/html
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+
+WORKDIR /var/www/html
+
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+CMD ["php-fpm"]

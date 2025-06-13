@@ -14,6 +14,8 @@ class Create_orders
 			'updated_at' => array('constraint' => 11, 'null' => true, 'type' => 'int', 'unsigned' => true),
 		), array('id'));
 
+		\DB::query("CREATE INDEX idx_orders_user_id ON orders(user_id)")->execute();
+
 		\DB::query("
 			ALTER TABLE `orders`
 			ADD CONSTRAINT `fk_orders_user`

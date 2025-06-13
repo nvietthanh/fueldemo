@@ -8,7 +8,7 @@ abstract class Requests_Common_Base
 {
     protected static $validation;
 
-    public static function getValidator(): Validation
+    public static function get_validator(): Validation
     {
         if (static::$validation === null) {
             static::$validation = Validation::forge();
@@ -19,12 +19,12 @@ abstract class Requests_Common_Base
 
     public static function validate(array $input): array
     {
-        $val = static::getValidator();
+        $val = static::get_validator();
 
-        $val = static::setValidator($val);
+        $val = static::set_validator($val);
 
         if (!$val->run($input)) {
-            $errors = ValidationHelper::getErrors($val);
+            $errors = ValidationHelper::get_errors($val);
 
             throw new ValidationException($errors);
         }
@@ -32,5 +32,5 @@ abstract class Requests_Common_Base
         return $val->validated();
     }
 
-    abstract public static function setValidator(Validation $val): Validation;
+    abstract public static function set_validator(Validation $val): Validation;
 }

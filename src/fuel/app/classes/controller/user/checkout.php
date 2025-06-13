@@ -4,7 +4,10 @@ use Fuel\Core\DB;
 
 class Controller_User_Checkout extends Controller_User_Common_Auth
 {
-	protected $checkoutService;
+	/**
+	 * @var checkout_service Handles business logic for checkouts
+	 */
+	protected $checkout_service;
 
 	public $template = 'layouts/user';
 
@@ -12,14 +15,16 @@ class Controller_User_Checkout extends Controller_User_Common_Auth
 	{
 		parent::before();
 
-		$this->checkoutService = Services_User_Checkout::forge();
+		$this->checkout_service = new Services_User_Checkout();
 	}
 
 	public function action_index()
 	{
-		$cartItems = $this->checkoutService->getCart();
+		$cart_items = $this->checkout_service->get_cart();
 
-		$data['cartItems'] = $cartItems;
+		$data = [
+			'cart_items' => $cart_items,	
+		];
 
 		$this->template->title = 'Checkout';
 		$this->template->content = View::forge('user/checkout/index', $data, false);
@@ -35,21 +40,21 @@ class Controller_User_Checkout extends Controller_User_Common_Auth
 
 	public function action_store()
 	{
-		$input = Input::post();
+		$post = Input::post();
 
-		$inputVal = Requests_User_Checkout_Store::validate($input);
+		$post_val = Requests_User_Checkout_Store::validate($post);
 
 		DB::start_transaction();
 		try {
-			$this->checkoutService->createCheckout($inputVal);
+			$this->checkout_service->create_checkout($post_val);
 
 			DB::commit_transaction();
 
-			return $this->jsonResponse(null, 'Created successfully!', 200);
+			return $this->json_response(null, 'Created successfully!', 200);
 		} catch (\Throwable $th) {
 			DB::rollback_transaction();
 
-			return $this->jsonResponse([], $th->getMessage(), 500);
+			return $this->json_response([], $th->getMessage(), 500);
 		}
 	}
 
